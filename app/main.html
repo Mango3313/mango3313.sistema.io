@@ -49,13 +49,16 @@
                     <!-- BUSQUEDA, EDICION, ELIMINACION-->
                     <div class="col">
                         <form class="form-inline my-2 my-lg-0">
-                            <input class="form-control mr-sm-2" type="search" placeholder="Nombre" aria-label="Buscar">
+                            <input class="form-control mr-sm-2" type="search" placeholder="Nombre" aria-label="Buscar" id="search-name">
                             <button class="btn btn-outline-success my-2 my-sm-0" type="button" id="btn-buscarUsr">Buscar</button>
                         </form>
                     </div>
                     <div class="col mt-3">
                         <form>
                             <div class="form-row">
+                                <div class="col hidden">
+                                    <input type="text" disabled="disabled" class="form-control" id="edit-id">
+                                </div>
                                 <div class="col">
                                     <input type="text" disabled="disabled" class="form-control" placeholder="Nombre" id="edit-nombre">
                                 </div>
@@ -71,8 +74,8 @@
 
                                 <div class="col">
 
-                                    <button type="button" class="btn btn-primary">Editar</button>
-                                    <button type="button" class="btn btn-danger">Eliminar</button>
+                                    <button type="button" class="btn btn-primary" id="btn-editar">Editar</button>
+                                    <button type="button" class="btn btn-danger" id="btn-eliminar">Eliminar</button>
 
                                 </div>
                             </div>

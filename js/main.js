@@ -5,13 +5,15 @@ var headers = {};
 function init() {
     if (sessionStorage.getItem("token")) {
         headers = {
-            'Authorization': "bearer" + sessionStorage.getItem("token")
+            'Authorization': "Bearer " + sessionStorage.getItem("token")
         };
         document.getElementById('consulta').addEventListener('click', mostrarBusqueda);
         document.getElementById('alta').addEventListener('click', mostrarAlta);
         document.getElementById('salir').addEventListener('click', salir);
         document.getElementById('btn-crear').addEventListener('click', altaUsuarios);
-        //document.getElementById('btn-crear').addEventListener('click',);
+        document.getElementById('btn-buscarUsr').addEventListener('click', buscarUsuario);
+        document.getElementById('btn-editar').addEventListener('click', modificarUsuarios);
+        document.getElementById('btn-eliminar').addEventListener('click', eliminarUsuarios);
     } else {
         window.location.replace("../index.html");
     }
@@ -37,19 +39,37 @@ function salir() {
 }
 
 function buscarUsuario() {
-    var nombre = document.getElementById('btn-buscarUsr').value;
-    axios.get(url + '/users/obtenerUsuarios/' + nombre, headers).then((res) => {
-        const {
-            id_us,
-            nombre,
-            apellidos,
-            telefono,
-            correo,
-            direccion
-        } = res.data.message[0];
-        
-    }).catch((error) => {
+    var nombre = document.getElementById('search-name').value;
+    axios({
+        method: 'get',
+        url: url + '/users/obtenerUsuarios/' + nombre,
+        headers: headers
+    }).then((res) => {
 
+        if (res.data.code === 200 ) {
+            const {
+                id_us,
+                nombre,
+                apellidos,
+                telefono,
+                //correo,
+                direccion
+            } = res.data.message[0];
+            document.getElementById('edit-id').value = id_us;
+            document.getElementById('edit-nombre').value = nombre;
+            document.getElementById('edit-apellido').value = apellidos;
+            document.getElementById('edit-tel').value = telefono;
+            document.getElementById('edit-direccion').value = direccion;
+
+            document.getElementById('edit-nombre').disabled = false;
+            document.getElementById('edit-apellido').disabled = false;
+            document.getElementById('edit-tel').disabled = false;
+            document.getElementById('edit-direccion').disabled = false;
+        } else {
+            alert(res.data.message);
+        }
+    }).catch((error) => {
+        console.log(error);
     });
 }
 
@@ -60,6 +80,7 @@ function altaUsuarios() {
     var correo = document.getElementById('input-correo').value;
     var direccion = document.getElementById('input-dir').value;
     var contrasena = document.getElementById('input-pass').value;
+    //console.log(headers);
     axios({
         method: 'post',
         url: url + '/users/altaUsuario',
@@ -90,17 +111,72 @@ function altaUsuarios() {
 }
 
 function modificarUsuarios() {
-    axios.patch(url + 'users/modificarUsuario/' + idusuario, headers).then((res) => {
+    var id = document.getElementById('edit-id').value;
+    var nombre = document.getElementById('edit-nombre').value;
+    var apellido = document.getElementById('edit-apellido').value;
+    var telefono = document.getElementById('edit-tel').value;
+    var direccion = document.getElementById('edit-direccion').value;
+    if (id) {
+        axios({
+            method: 'patch',
+            url: url + '/users/modificarUsuario/' + id,
+            headers: headers,
+            data: {
+                nombre: nombre,
+                apellidos: apellido,
+                telefono: telefono,
+                direccion: direccion,
+            }
+        }).then((res) => {
+            if (res.data.code === 200) {
+                document.getElementById('search-name').value = '';
 
-    }).catch((error) => {
+                document.getElementById('edit-nombre').disabled = true;
+                document.getElementById('edit-apellido').disabled = true;
+                document.getElementById('edit-tel').disabled = true;
+                document.getElementById('edit-direccion').disabled = true;
 
-    });
+                document.getElementById('edit-id').value = '';
+                document.getElementById('edit-nombre').value = '';
+                document.getElementById('edit-apellido').value = '';
+                document.getElementById('edit-tel').value = '';
+                document.getElementById('edit-direccion').value = '';
+            } else {
+                alert(res.data.message);
+            }
+
+        }).catch((error) => {
+            console.log(error);
+        });
+    }
 }
 
 function eliminarUsuarios() {
-    axios.delete(url + '/users/obtenerUsuarios/' + idusuario, headers).then((res) => {
+    var id = document.getElementById('edit-id').value;
+    if (id) {
+        axios({
+            method: 'delete',
+            url: url + '/users/eliminarUsuario/' + id,
+            headers: headers
+        }).then((res) => {
+            if (res.data.code === 200) {
+                document.getElementById('search-name').value = '';
 
-    }).catch((error) => {
+                document.getElementById('edit-nombre').disabled = true;
+                document.getElementById('edit-apellido').disabled = true;
+                document.getElementById('edit-tel').disabled = true;
+                document.getElementById('edit-direccion').disabled = true;
 
-    });
+                document.getElementById('edit-id').value = '';
+                document.getElementById('edit-nombre').value = '';
+                document.getElementById('edit-apellido').value = '';
+                document.getElementById('edit-tel').value = '';
+                document.getElementById('edit-direccion').value = '';
+            } else {
+                alert(res.data.message);
+            }
+        }).catch((error) => {
+            console.log(error);
+        });
+    }
 }
