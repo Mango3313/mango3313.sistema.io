@@ -15,11 +15,10 @@ function login(){
         }
     }).then((res)=>{
         if (res.data.code === 200) {
-            alert("Inicio exitoso");
             sessionStorage.setItem("token",res.data.message);
             window.location.href = "./app/main.html";
         }else{
-            alert("Datos incorrectos");
+            alert(res.data.message);
         }
     }).catch((error)=>{
         console.log(error);

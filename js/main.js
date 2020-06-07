@@ -14,6 +14,7 @@ function init() {
         document.getElementById('btn-buscarUsr').addEventListener('click', buscarUsuario);
         document.getElementById('btn-editar').addEventListener('click', modificarUsuarios);
         document.getElementById('btn-eliminar').addEventListener('click', eliminarUsuarios);
+        document.getElementById('btn-limpiar').addEventListener('click', limpiarDespuesDe);
     } else {
         window.location.replace("../index.html");
     }
@@ -45,26 +46,18 @@ function buscarUsuario() {
         url: url + '/users/obtenerUsuarios/' + nombre,
         headers: headers
     }).then((res) => {
-
-        if (res.data.code === 200 ) {
+        if (res.data.code === 200) {
             const {
                 id_us,
                 nombre,
                 apellidos,
                 telefono,
-                //correo,
                 direccion
             } = res.data.message[0];
-            document.getElementById('edit-id').value = id_us;
-            document.getElementById('edit-nombre').value = nombre;
-            document.getElementById('edit-apellido').value = apellidos;
-            document.getElementById('edit-tel').value = telefono;
-            document.getElementById('edit-direccion').value = direccion;
 
-            document.getElementById('edit-nombre').disabled = false;
-            document.getElementById('edit-apellido').disabled = false;
-            document.getElementById('edit-tel').disabled = false;
-            document.getElementById('edit-direccion').disabled = false;
+            asignarValores(id_us, nombre, apellidos, telefono, direccion);
+            deshabilitarCampos();
+
         } else {
             alert(res.data.message);
         }
@@ -96,12 +89,7 @@ function altaUsuarios() {
     }).then((res) => {
         if (res.data.code === 200) {
             alert(res.data.message);
-            document.getElementById('input-nombre').value = '';
-            document.getElementById('input-apellidos').value = '';
-            document.getElementById('input-tel').value = '';
-            document.getElementById('input-correo').value = '';
-            document.getElementById('input-dir').value = '';
-            document.getElementById('input-pass').value = '';
+            limpiarDespuesDeAlta();
         } else {
             alert(res.data.message);
         }
@@ -129,18 +117,7 @@ function modificarUsuarios() {
             }
         }).then((res) => {
             if (res.data.code === 200) {
-                document.getElementById('search-name').value = '';
-
-                document.getElementById('edit-nombre').disabled = true;
-                document.getElementById('edit-apellido').disabled = true;
-                document.getElementById('edit-tel').disabled = true;
-                document.getElementById('edit-direccion').disabled = true;
-
-                document.getElementById('edit-id').value = '';
-                document.getElementById('edit-nombre').value = '';
-                document.getElementById('edit-apellido').value = '';
-                document.getElementById('edit-tel').value = '';
-                document.getElementById('edit-direccion').value = '';
+                limpiarDespuesDe();
             } else {
                 alert(res.data.message);
             }
@@ -160,18 +137,7 @@ function eliminarUsuarios() {
             headers: headers
         }).then((res) => {
             if (res.data.code === 200) {
-                document.getElementById('search-name').value = '';
-
-                document.getElementById('edit-nombre').disabled = true;
-                document.getElementById('edit-apellido').disabled = true;
-                document.getElementById('edit-tel').disabled = true;
-                document.getElementById('edit-direccion').disabled = true;
-
-                document.getElementById('edit-id').value = '';
-                document.getElementById('edit-nombre').value = '';
-                document.getElementById('edit-apellido').value = '';
-                document.getElementById('edit-tel').value = '';
-                document.getElementById('edit-direccion').value = '';
+                limpiarDespuesDe();
             } else {
                 alert(res.data.message);
             }
@@ -179,4 +145,43 @@ function eliminarUsuarios() {
             console.log(error);
         });
     }
+}
+
+function limpiarDespuesDe() {
+    document.getElementById('search-name').value = '';
+
+    document.getElementById('edit-nombre').disabled = true;
+    document.getElementById('edit-apellido').disabled = true;
+    document.getElementById('edit-tel').disabled = true;
+    document.getElementById('edit-direccion').disabled = true;
+
+    document.getElementById('edit-id').value = '';
+    document.getElementById('edit-nombre').value = '';
+    document.getElementById('edit-apellido').value = '';
+    document.getElementById('edit-tel').value = '';
+    document.getElementById('edit-direccion').value = '';
+}
+
+function limpiarDespuesDeAlta() {
+    document.getElementById('input-nombre').value = '';
+    document.getElementById('input-apellidos').value = '';
+    document.getElementById('input-tel').value = '';
+    document.getElementById('input-correo').value = '';
+    document.getElementById('input-dir').value = '';
+    document.getElementById('input-pass').value = '';
+}
+
+function deshabilitarCampos() {
+    document.getElementById('edit-nombre').disabled = false;
+    document.getElementById('edit-apellido').disabled = false;
+    document.getElementById('edit-tel').disabled = false;
+    document.getElementById('edit-direccion').disabled = false;
+}
+
+function asignarValores(id_us, nombre, apellidos, telefono, direccion) {
+    document.getElementById('edit-id').value = id_us;
+    document.getElementById('edit-nombre').value = nombre;
+    document.getElementById('edit-apellido').value = apellidos;
+    document.getElementById('edit-tel').value = telefono;
+    document.getElementById('edit-direccion').value = direccion;
 }
