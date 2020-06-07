@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="../js/global.js"></script>
+    <script src="../js/main.js"></script>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Panel de administrador</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active" id="consulta-li">
+                    <a class="nav-link" href="#" id="consulta">Consulta<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item" id="alta-li">
+                    <a class="nav-link" href="#" id="alta">Alta de usuarios<span class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+            <ul class="navbar-nav">
+                <li class="nav-item" id="salir">
+                    <a class="nav-link" href="#" id="consulta">Logout</span></a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="card mt-3 mr-5 ml-5">
+        <div class="card-header">
+            Opcion
+        </div>
+        <div class="card-body">
+            <div>
+                <div id="consulta-form">
+                    <!-- BUSQUEDA, EDICION, ELIMINACION-->
+                    <div class="col">
+                        <form class="form-inline my-2 my-lg-0">
+                            <input class="form-control mr-sm-2" type="search" placeholder="Nombre" aria-label="Buscar">
+                            <button class="btn btn-outline-success my-2 my-sm-0" type="button" id="btn-buscarUsr">Buscar</button>
+                        </form>
+                    </div>
+                    <div class="col mt-3">
+                        <form>
+                            <div class="form-row">
+                                <div class="col">
+                                    <input type="text" disabled="disabled" class="form-control" placeholder="Nombre" id="edit-nombre">
+                                </div>
+                                <div class="col">
+                                    <input type="text" disabled="disabled" class="form-control" placeholder="Apellido" id="edit-apellido">
+                                </div>
+                                <div class="col">
+                                    <input type="text" disabled="disabled" class="form-control" placeholder="Telefono" id="edit-tel">
+                                </div>
+                                <div class="col">
+                                    <input type="text" disabled="disabled" class="form-control" placeholder="Direccion" id="edit-direccion">
+                                </div>
+
+                                <div class="col">
+
+                                    <button type="button" class="btn btn-primary">Editar</button>
+                                    <button type="button" class="btn btn-danger">Eliminar</button>
+
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="hidden" id="alta-form">
+                    <!-- ALTA FORM-->
+                    <div class="col mt-3">
+                        <form>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="inputEmail4">Nombre</label>
+                                    <input type="text" class="form-control" id="input-nombre">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputPassword4">Apellidos</label>
+                                    <input type="text" class="form-control" id="input-apellidos">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="inputEmail4">Telefono</label>
+                                    <input type="tel" class="form-control" id="input-tel">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputPassword4">Correo</label>
+                                    <input type="email" class="form-control" id="input-correo">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="inputEmail4">Direccion</label>
+                                    <input type="text" class="form-control" id="input-dir">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputPassword4">Contraseña</label>
+                                    <input type="text" class="form-control" id="input-pass">
+                                </div>
+                            </div>
+
+                            <button type="button" class="btn btn-primary" id="btn-crear">Crear</button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
